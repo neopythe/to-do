@@ -75,14 +75,16 @@ export default class TodoList extends Component {
           }}
           className="flex flex-col justify-between items-start card w-[90%] sm:w-fit h-fit bg-white"
         >
-          <section className="flex flex-row justify-between w-full">
+          <section className="flex flex-row justify-between w-full h-32">
             <div className="flex flex-col items-start card-body text-start">
               <h1 className="font-bold text-xl">to-do list</h1>
               <p className="text-sm">a simple React to-do list app</p>
             </div>
-            {this.state.todos.length > 0 && (
+            {this.state.todos.find((todo) => !todo.isCompleted) && (
               <div className="flex flex-col text-end card-body text-[#add331]">
-                <h2 className="font-bold text-lg">{this.state.todos.length}</h2>
+                <h2 className="font-bold text-lg">
+                  {this.state.todos.filter((todo) => !todo.isCompleted).length}
+                </h2>
                 <button
                   onClick={this.toggleSort}
                   className="btn btn-xs btn-success w-fit hover:bg-[#c5e755] lowercase px-4 self-end"
