@@ -12,9 +12,9 @@ export default class TodoList extends Component {
     }
     this.create = this.create.bind(this)
     this.delete = this.delete.bind(this)
-    this.update = this.update.bind(this)
     this.toggleCompleted = this.toggleCompleted.bind(this)
     this.toggleSort = this.toggleSort.bind(this)
+    this.update = this.update.bind(this)
   }
 
   create(todo) {
@@ -25,28 +25,19 @@ export default class TodoList extends Component {
   }
 
   delete(id) {
-    localStorage.setItem(
-      'todos',
-      JSON.stringify(this.state.todos.filter((todo) => todo.id !== id))
-    )
-    this.setState({
-      todos: JSON.parse(localStorage.getItem('todos')),
+    document.getElementById(id).classList.add('opacity-0')
+    this.sleep(500).then(() => {
+      localStorage.setItem(
+        'todos',
+        JSON.stringify(this.state.todos.filter((todo) => todo.id !== id))
+      )
+      this.setState({
+        todos: JSON.parse(localStorage.getItem('todos')),
+      })
     })
   }
 
-  update(id, updatedTask) {
-    localStorage.setItem(
-      'todos',
-      JSON.stringify(
-        this.state.todos.map((todo) =>
-          todo.id === id ? { ...todo, task: updatedTask } : todo
-        )
-      )
-    )
-    this.setState({
-      todos: JSON.parse(localStorage.getItem('todos')),
-    })
-  }
+  sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
   toggleCompleted(id) {
     localStorage.setItem(
@@ -64,6 +55,20 @@ export default class TodoList extends Component {
 
   toggleSort() {
     this.setState({ isSorted: !this.state.isSorted })
+  }
+
+  update(id, updatedTask) {
+    localStorage.setItem(
+      'todos',
+      JSON.stringify(
+        this.state.todos.map((todo) =>
+          todo.id === id ? { ...todo, task: updatedTask } : todo
+        )
+      )
+    )
+    this.setState({
+      todos: JSON.parse(localStorage.getItem('todos')),
+    })
   }
 
   render() {

@@ -11,18 +11,18 @@ export default class Todo extends Component {
       task: this.props.task,
     }
     this.handleChange = this.handleChange.bind(this)
+    this.handleComplete = this.handleComplete.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
     this.handleUpdate = this.handleUpdate.bind(this)
-    this.handleComplete = this.handleComplete.bind(this)
     this.toggleForm = this.toggleForm.bind(this)
-  }
-
-  handleComplete() {
-    this.props.toggleCompleted(this.props.id)
   }
 
   handleChange(event) {
     this.setState({ [event.target.name]: event.target.value })
+  }
+
+  handleComplete() {
+    this.props.toggleCompleted(this.props.id)
   }
 
   handleDelete() {
@@ -42,8 +42,8 @@ export default class Todo extends Component {
   render() {
     const form = (
       <li
-        style={{ transition: 'all 0.8s' }}
-        className="card-body flex-row justify-between items-center w-full h-16 py-6 bg-[#c5e755]"
+        style={{ transition: 'all 0.5s' }}
+        className="card-body flex-row justify-between items-center w-full h-16 my-1 py-6 bg-[#c5e755]"
       >
         <form
           onSubmit={this.handleUpdate}
@@ -68,18 +68,19 @@ export default class Todo extends Component {
       ? {
           backgroundColor: '#f0f9d2',
           color: '#54631e',
-          transition: 'all 0.8s',
+          transition: 'all 0.5s',
         }
       : {
           backgroundColor: '#f0f2f5',
           color: '#475569',
           textDecoration: 'line-through',
-          transition: 'all 0.8s',
+          transition: 'all 0.5s',
         }
 
     const todo = (
       <li
         style={taskStyles}
+        id={this.props.id}
         className="card-body flex-row justify-between items-center w-full h-16 my-1"
       >
         <div onClick={this.handleComplete} className="w-full text-start">
